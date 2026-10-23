@@ -1,0 +1,42 @@
+{
+  "body": {
+    "valid": true,
+    "solids": 1,
+    "size_mm": [
+      88.065,
+      88.038,
+      27.065
+    ],
+    "volume_mm3": 35591.99
+  },
+  "rear_cover": {
+    "valid": true,
+    "solids": 1,
+    "size_mm": [
+      88.027,
+      88.0,
+      2.427
+    ],
+    "volume_mm3": 14477.67
+  },
+  "front_bezel": {
+    "valid": true,
+    "solids": 1,
+    "size_mm": [
+      88.027,
+      88.0,
+      3.027
+    ],
+    "volume_mm3": 6201.57
+  },
+  "mount_fit_check": {
+    "valid": true,
+    "solids": 1,
+    "size_mm": [
+      70.004,
+      70.0,
+      1.222
+    ],
+    "volume_mm3": 2252.04
+  }
+}

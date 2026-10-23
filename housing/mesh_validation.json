@@ -1,0 +1,26 @@
+{
+  "body": {
+    "triangles": 9648,
+    "open_or_nonmanifold_edges": 0,
+    "winding_errors": 0,
+    "signed_volume_mm3": 35568.27
+  },
+  "front_bezel": {
+    "triangles": 3544,
+    "open_or_nonmanifold_edges": 0,
+    "winding_errors": 0,
+    "signed_volume_mm3": 6199.0
+  },
+  "rear_cover": {
+    "triangles": 3548,
+    "open_or_nonmanifold_edges": 0,
+    "winding_errors": 0,
+    "signed_volume_mm3": 14471.67
+  },
+  "mount_fit_check": {
+    "triangles": 3480,
+    "open_or_nonmanifold_edges": 0,
+    "winding_errors": 0,
+    "signed_volume_mm3": 2251.26
+  }
+}
