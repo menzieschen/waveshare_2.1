@@ -1,102 +1,151 @@
-# Arc reactor housing — first-fit prototype
+# Arc reactor housing — revision 2
 
-Target: Waveshare **ESP32-S3-Touch-LCD-2.1B**, curved 71.8 mm glass,
-and a wrapped **66 × 36 × 11 mm** LiPo battery. All dimensions are millimeters.
-Nominal assembled envelope: **88 mm diameter × 32.4 mm deep**, without screws.
+For Waveshare **ESP32-S3-Touch-LCD-2.1B** and a wrapped **66 × 36 × 11 mm**
+LiPo. Units: millimeters. Print at **100% scale**.
 
-This is a CAD-validated prototype, not a physically verified fit. Print
-`mount_fit_check.stl` first and hold it against the four exposed threaded spacer
-ends on your board. The exact B glass height and cable-overmold fit still need
-checking on your device. Do not force the glass, spacers, or battery into place.
+## What changed after the first physical print
 
-## Files
+- Preserved the confirmed board mounting-hole centers and battery pocket.
+- Restored the complete flat top of all four M2 mounting pads. The old build
+  cut its USB windows after making the pads and notched the lower pair by 1 mm.
+  Windows are now cut before adding the pads. USB opening positions and nominal
+  dimensions are retained; the pad surfaces take priority in their bottom corners.
+- Reduced the nominal cylindrical wall from 4.8 to **3 mm** by increasing the
+  inside radius to 41 mm. Outside diameter stays **88 mm**, so the existing
+  front bezel remains compatible. Cover screw bosses are retained. Battery-guide
+  end anchors now extend to the thinner wall, without narrowing the pocket.
+- Replaced the incorrect large control cutouts with separate **1.8 mm high**
+  slits: power slider 6 mm wide, RESET and BOOT 4.2 mm wide each.
+- Added an inside-loading `power_slider.stl` and one `button_extension.stl`
+  to print **twice**, once for RESET and once for BOOT.
+- Removed the two mistaken rear LED holes. The rear cover is now **4 mm thick**.
+  Its inside face stays in the same place; the extra 1.6 mm grows outward.
+  Assembled case depth is now **34 mm**, excluding external control blades.
 
-- `body.stl`: main shell, USB-C/switch/button cutouts, four board supports,
-  battery guides, and cover screw pilots. Already positioned on the print bed.
-- `front_bezel.stl`: separate face ring, 70.8 mm opening and 72.6 mm underside relief.
-  The active screen is about 53.48 mm across, so its full area remains visible.
-- `rear_cover.stl`: removable battery access cover, with two 4 mm status-LED windows.
-  LEDs shine toward the rear; the battery guides leave their sightlines clear.
-- `mount_fit_check.stl`: 1.2 mm thick spacing gauge; **not an installed part**.
-- Matching STEP files and `assembly.step`: editable solid geometry.
-- `preview.png`: view of the exported STL meshes.
-- `build.py`: parameterized CadQuery source; `inspect_meshes.py`: mesh checks/preview.
+Board mounting positions and battery fit have been physically confirmed by the
+user on revision 1. Revision 2 pad surfaces, thinner wall, and control extensions
+have been checked in CAD, but have **not yet been physically fitted**. The photo
+confirms the USB → slider → RESET → BOOT sequence. Precise control tip geometry
+comes from the vendor STEP, not measurements inferred from photo pixels.
 
-## Printing
+## Files and downloads
 
-Suggested starting settings: PETG or PLA, 0.2 mm layers, 0.4 mm nozzle,
-4 perimeters, 20–30% infill. Body: open side up, **supports under the four
-internal mounting bridges**; remove supports before installing electronics.
-Rear cover: flat. Front bezel: put its flat front face on the bed, relief upward.
-Print the fit gauge first. Printer shrinkage/hole tolerances may require adjustment.
-Hole centers must be retained if increasing hole diameters in the source.
+- `body.stl`: revised main shell, already positioned on the print bed.
+- `rear_cover.stl`: 4 mm cover; only four screw holes.
+- `front_bezel.stl`: unchanged geometry; reuse your existing print.
+- `power_slider.stl`: print one; socket engages the existing black slide tab.
+- `button_extension.stl`: print two identical pieces for RESET and BOOT.
+- `control_fit_check.stl`: small section of the actual new control wall for an
+  inexpensive trial with the extensions before committing to another full body.
+  It is a test coupon, **not an installed piece**; align it to the controls by
+  hand with the board out of the full housing. It has no self-locating board mounts.
+- `mount_fit_check.stl`: original, already confirmed mounting-spacing gauge.
+- `*.step` and `assembly.step`: editable CAD; assembly includes both button copies.
+- `preview.png`: technical views of the actual STL meshes.
+- `arc_reactor_housing.zip`: all files, regenerated after the build and checks.
 
-## Assembly
+## Printing and installing control extensions
 
-1. Check the gauge aligns with the board's four threaded M2 spacer ends.
-2. With rear cover and bezel removed, lower the board through the front of the
-   shell, screen facing outward, USB-C connectors toward the two diagonal slots.
-   In CAD coordinates, USB is at negative Y and the switch is at positive X.
-3. Fit four **M2 × 4 mm machine screws** from the rear through the support holes
-   into the existing board spacers. The supports are 2.4 mm thick, leaving about
-   1.6 mm thread engagement. Confirm the actual spacer thread depth before use;
-   account for washers and never bottom a screw out against electronics.
-4. Verify both USB plugs insert fully, the switch moves through its full travel,
-   and BOOT/RESET are accessible. USB slots are 14 mm wide × 8 mm high; some
-   cable housings may need larger openings. Switch opening is 14 × 9 mm.
-5. Fit the front bezel with four **M2.5 × 6 mm screws suitable for plastic**.
-   The body has 2.1 mm pilot holes. Tighten lightly; do not clamp the glass.
-   No heat-set inserts or M2.5 machine-threaded holes are provided.
-6. Lay the battery with its **66 mm axis along Y**, centered between the guides.
-   Nominal pocket is 68 × 38 mm; at least a 37 × 67 × 12 mm padded envelope
-   is checked clear in CAD. Use removable nonconductive tape to retain it.
-   Route the lead around a guide's open short end, clear of screws and edges.
-   Keep the pouch uncompressed, with no screw tips or electronics against it.
-7. Fit the rear cover with four more M2.5 × 6 mm plastic screws. Verify the two
-   status LEDs can be seen through the rear windows. Those windows are for
-   status visibility, not front-facing arc-reactor illumination.
+Use 0.2 mm layers and a 0.4 mm nozzle for the body, four perimeters and 20–30%
+infill. Body: open side upward, **supports under the four mounting bridges**.
+Rear cover: flat. Bezel: flat front face downward, relief upward.
 
-Cover screw pilots are blind and separate at each end. Battery access requires
-removing the rear cover. Costume attachment is not included in this first design.
+For the tiny extensions, PETG is preferred; try 0.12–0.16 mm layers. Files are
+oriented on a tangential side so the stem/socket walls run in the build plane.
+Enable supports beneath the raised stems and collar/socket overhangs; the
+provided orientation does not put every underside on the bed. Remove
+supports carefully from the socket; compensate elephant foot and deburr the
+1.2 mm stems so they slide freely through the 1.8 mm slits. Do not enlarge
+openings by forcing them with the board installed.
+
+The exterior controls are thin projecting **blades**, not large exterior caps.
+This lets each complete one-piece extension be installed from the inside through
+its thin slit. The wider collar stays inside and limits escape outward. Behind
+those collars the body has local internal relief pockets, so the visible exterior
+openings remain thin. The extensions are captive only after the board is fitted;
+with the board absent, they can fall inward.
+
+1. Test the control-wall coupon and extensions first. Place the board next to it
+   with the correct USB port next to the switch. Confirm tip height and spacing.
+2. Before installing the board, feed the thin stems from **inside to outside**
+   through their slits. The collars stay inside the body. Insert the slider with
+   its inward-open fork/socket facing the black tab on the board switch.
+3. Lower the board into place, lining up the slider socket around the existing
+   black tab. Do not force it. If it binds, remove the extension and adjust the
+   fit in the source or gently deburr it; never force the board switch.
+4. Verify both switch positions without resistance from the case. Each button
+   should rest slightly clear of its actuator and click with a light press.
+   Remove an extension if it holds RESET/BOOT pressed, or prevents switching.
+
+**The extensions are provisional fit pieces.** The nominal vendor button tip is
+at X = 34.001; the extension starts at X = 34.2, leaving approximately 0.2 mm
+clearance. The slider tab is approximately 1.5 mm wide × 0.71 mm thick, with
+2 mm travel between positions. Its socket is 2.0 mm wide × 1.3 mm high and
+about 2 mm deep. These dimensions need confirmation on your physical B board.
+The build verifies housing clearance during 0.6 mm button movement and the
+slider's nominal travel; this **does not establish the real button travel rating**.
+The push extensions have no calibrated overtravel stop or independent return
+spring: use light finger pressure only. The board's tactile switches supply the
+return force. Do not glue anything to the board controls or use a stuck extension.
+
+## Main assembly and screws
+
+1. Insert the control extensions, then lower the board in from the open front,
+   with screen outward and USB ports aligned with the two diagonal openings.
+2. Use four **M2 × 4 mm pan-head machine screws** from the rear, through the
+   2.4 mm support pads, into the existing board spacers. This leaves about
+   1.6 mm thread engagement. Confirm screw depth and tighten gently.
+3. Test all controls and full USB plug insertion before closing the case.
+4. Fit the existing front bezel with four **M2.5 × 6 mm screws for plastic**.
+   The 2.1 mm pilot holes now end 4.4 mm below the shell's front face, above
+   the controls. Do not substitute longer front screws or use heat-set inserts.
+5. Place the battery with its **66 mm axis along Y**, between the unchanged
+   guide faces. Keep the pouch uncompressed; use removable nonconductive tape
+   to retain it. Route wiring around an open guide end, clear of screws.
+6. Fit the 4 mm rear cover with four **M2.5 × 8 mm screws for plastic**. The
+   previous 6 mm screws give only 2 mm engagement with this thicker cover.
+
+There are no rear status-LED windows; the actual LEDs sit next to USB. Front
+illumination is supplied by the display. Costume attachment is not included.
 
 ## Geometry and sources
 
-Manufacturer product page identifies the B curved-panel version:
+Manufacturer product page identifies B as the 71.8 mm curved-panel version:
 https://www.waveshare.com/esp32-s3-touch-lcd-2.1.htm
 
-Manufacturer mechanical drawing archive (standard board assembly):
+Vendor STEP and drawing archive:
 https://files.waveshare.com/wiki/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1_structure.zip
 
-B glass diameter drawing:
+B glass dimensions:
 https://www.waveshare.com/img/devkit/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1-details-size-1.jpg
 
-Rear board dimensions:
+Rear PCB dimensions:
 https://www.waveshare.com/img/devkit/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1-details-size-3.jpg
 
-The downloadable STEP is the **standard 75 mm glass assembly**, not a dedicated
-B assembly. Board mounting, connector, switch and LED coordinates were taken
-from that model, while the bezel uses the published B glass diameter.
-Shared PCB geometry is a first-fit assumption requiring physical confirmation.
-The shell accommodates the standard 75 mm glass envelope as clearance, but the
-bezel is intended for B. Do not treat this as a confirmed universal-fit enclosure.
+The downloadable STEP uses standard 75 mm glass, not a dedicated B assembly.
+Board mount and USB alignment have since been confirmed by physical printing.
+B glass height and exact control dimensions still need physical confirmation.
 
-Coordinate system follows vendor STEP: screen faces +Z; rear-view photographs
-mirror X. M2 mounting centers: (±29.5, 13.638), (±18, −27.060).
-Spacer bottoms are at Z = 19.4 in assembled housing coordinates. Vendor model
-is translated +25.5 in Z. LED window centers: (29.2, −17.8), (31.2, −14.1).
+Coordinates follow vendor STEP, screen facing +Z; rear photos mirror X. The
+model is translated +25.5 in Z in the assembly. M2 centers remain
+(±29.5, 13.638), (±18, −27.060); pad tops Z = 19.4. The RESET/BOOT actuator
+centers are at Y = 0.5023 and 8.1023, Z = 22.45, facing +X. Slider travel is
+along Y about −7.303, Z = 22.3995. Previous button slots mistakenly used
+coordinates for other components on the opposite side and the wrong tip height.
 
-## Rebuilding and checks
+## Rebuild and validation
 
-Current environment has Python, CadQuery 2.7.0, NumPy and Matplotlib installed.
-From the repository root:
+Python, CadQuery 2.7.0, NumPy and Matplotlib are installed in the current cloud
+workspace. Use the existing checkout; no Git worktree is needed. From its root:
 
 ```sh
 XDG_CACHE_HOME=/tmp/cad-cache python housing/build.py
-MPLCONFIGDIR=/tmp/matplotlib python housing/inspect_meshes.py
+MPLCONFIGDIR=/tmp/matplotlib XDG_CACHE_HOME=/tmp/cad-cache python housing/inspect_meshes.py
 ```
 
-The build checks valid single solids, battery clearance, and unobstructed LED
-sightlines. Mesh checks require every edge to have exactly two incident faces,
-consistent winding, and positive signed volume. Results are in `validation.json`
-and `mesh_validation.json`. These checks do not replace a slicer preview or a
-physical fit test. STL units are millimeters; do not scale on import.
+The build checks valid single solids, the padded 37 × 67 × 12 mm battery
+clearance, complete flat annular tops on all four mounting pads, and extension
+clearance at both button positions and slider endpoints. Mesh checks require
+closed manifold edges, consistent winding and positive signed volume on all
+seven printable parts. Results: `validation.json` and `mesh_validation.json`.
+Always inspect your slicer preview and verify physical fit before assembly.
