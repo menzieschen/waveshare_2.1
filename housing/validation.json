@@ -3,11 +3,11 @@
     "valid": true,
     "solids": 1,
     "size_mm": [
-      88.066,
-      88.066,
-      27.066
+      88.114,
+      88.114,
+      27.114
     ],
-    "volume_mm3": 26064.52
+    "volume_mm3": 26750.08
   },
   "rear_cover": {
     "valid": true,
@@ -17,7 +17,7 @@
       88.0,
       4.027
     ],
-    "volume_mm3": 24229.97
+    "volume_mm3": 24205.34
   },
   "front_bezel": {
     "valid": true,
@@ -27,7 +27,7 @@
       88.0,
       3.027
     ],
-    "volume_mm3": 6201.57
+    "volume_mm3": 6183.1
   },
   "mount_fit_check": {
     "valid": true,
@@ -43,30 +43,30 @@
     "valid": true,
     "solids": 1,
     "size_mm": [
-      12.6,
+      12.4,
       3.0,
       5.0
     ],
-    "volume_mm3": 72.88
+    "volume_mm3": 61.24
   },
   "button_extension": {
     "valid": true,
     "solids": 1,
     "size_mm": [
-      11.6,
+      10.6,
       3.0,
       6.0
     ],
-    "volume_mm3": 66.53
+    "volume_mm3": 54.0
   },
   "control_fit_check": {
     "valid": true,
     "solids": 1,
     "size_mm": [
-      6.334,
-      28.058,
-      6.366
+      8.895,
+      28.027,
+      6.627
     ],
-    "volume_mm3": 518.65
+    "volume_mm3": 669.94
   }
 }
