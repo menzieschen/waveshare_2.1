@@ -1,4 +1,4 @@
-"""Revision 3: five cover fasteners and a chord-flat control band. Units: mm."""
+"""Revision 4: taller finger well and a captured, guided power slider. Units: mm."""
 from pathlib import Path
 import json
 import math
@@ -21,7 +21,12 @@ SLIDER_TRAVEL = 2.03
 SLIDER_SOCKET_WIDTH, SLIDER_SOCKET_HEIGHT = 2.0, 1.3
 FLAT_X = OUTER_R*math.cos(math.pi/6)  # chord from 2:00 to 4:00
 FLAT_INNER_X = FLAT_X-3.0
-FLAT_Z, FLAT_TOP = 20.0,25.0  # assembled Z; circular shell above and below
+FLAT_Z, FLAT_TOP = 10.5,25.5  # 15 mm finger well; clear of the glass above
+SLIDE_CLEARANCE = 0.3
+CAP_BACK_X = FLAT_X+SLIDE_CLEARANCE
+CAP_WING_FRONT_X = CAP_BACK_X+0.8
+CAP_OUTER_X = CAP_BACK_X+2.4
+RAIL_LIP_X = CAP_WING_FRONT_X+SLIDE_CLEARANCE
 # User measurement from the local glass edge to outermost tab tip. Treat the
 # recess as parallel to +X (radial interpretation differs by only ~0.04 mm).
 SLIDER_MEASURED_TIP_X = math.sqrt((71.8/2)**2-SLIDER_Y**2)-1.74
@@ -60,10 +65,22 @@ for x,y in MOUNTS:
     bridge=bridge.rotate((0,0,0),(0,0,1),a)
     body=body.union(bridge).union(cyl(3.3,2.4,SUPPORT_Z,x,y))
     body=body.cut(cyl(1.2,4,SUPPORT_Z-0.5,x,y))
+# The taller well overlaps the bridge height. Trim bridge ends flush with the
+# flat face, preserving the entire seating pads and their established height.
+body=body.cut(box(20,100,FLAT_TOP-FLAT_Z,FLAT_Z,FLAT_X+10,0))
 # Thin through-slits: tangential width x vertical height. Hidden inside reliefs
 # accept the retaining collars; the exterior apertures stay thin.
-body=body.cut(box(20,6.0,1.8,SLIDER_Z-0.9,38,SLIDER_Y))
-body=body.cut(box(3.0,7.7,3.2,SLIDER_Z-1.6,34.0,SLIDER_Y))
+body=body.cut(box(20,6.6,1.8,SLIDER_Z-0.9,38,SLIDER_Y))
+# Internal carriage recess: 6 x 3.8 plate, 2.03 travel, 0.3 clearance per side.
+body=body.cut(box(1.6,6.0+SLIDER_TRAVEL+2*SLIDE_CLEARANCE,4.4,
+                  SLIDER_Z-2.2,34.9,SLIDER_Y))
+# Exterior open-ended L rails capture the thin wings on the press-fit cap.
+# The cap is slid into these rails ALONG Y, before mating its stem from inside.
+for root_z,lip_z in [(SLIDER_Z-4.55,SLIDER_Z-4.55),
+                      (SLIDER_Z+2.45,SLIDER_Z+1.75)]:
+    body=body.union(box(RAIL_LIP_X-FLAT_X,10.8,0.5,root_z,
+                        (RAIL_LIP_X+FLAT_X)/2,SLIDER_Y))
+    body=body.union(box(0.6,10.8,1.2,lip_z,RAIL_LIP_X+0.3,SLIDER_Y))
 for y in BUTTON_Y:
     body=body.cut(box(20,4.2,1.8,BUTTON_Z-0.9,38,y))
     body=body.cut(box(1.4,6.6,3.6,BUTTON_Z-1.8,34.5,y))
@@ -98,15 +115,33 @@ for x,y in MOUNTS:
 # Reusable button extension. Local X is the press direction; thin stem passes
 # outward through the slit from inside. An interior collar prevents loss outward.
 # No enlarged exterior head: it would prevent insertion through a thin slit.
-button=box(10.6,3.6,1.2,-0.6,39.5,0)  # X=34.2..44.8; fingertip clears round rims
+BUTTON_TIP_X=FLAT_X+1.4
+button=box(BUTTON_TIP_X-34.2,3.6,1.2,-0.6,(BUTTON_TIP_X+34.2)/2,0)
 button=button.union(box(0.6,6.0,3.0,-1.5,34.7,0))
 # Slider: same inside-loading blade, with an inward-open socket over the black
 # tab. Measured tab 1.52 x 0.63, travel 2.03, recess 1.74 from B glass edge.
-slider=box(10.0,3.0,1.2,-0.6,39.8,0)  # X=34.8..44.8; fingertip clears round rims
-slider=slider.union(box(0.6,5.0,3.0,-1.5,34.7,0))
+# Internal bearing plate and shorter stem. The shoulder sets cap insertion depth
+# and prevents the cap being pressed inward hard against the housing wall.
+STEM_TIP_X=CAP_OUTER_X-0.6
+slider=box(STEM_TIP_X-34.8,3.0,1.2,-0.6,(STEM_TIP_X+34.8)/2,0)
+slider=slider.union(box(1.0,6.0,3.8,-1.9,34.9,0))
+slider=slider.union(box(CAP_BACK_X-36.6,4.0,1.4,-0.7,(CAP_BACK_X+36.6)/2,0))
 slider=slider.union(box(2.8,4.0,2.6,-1.3,33.8,0))
 slider=slider.cut(box(2.5,SLIDER_SOCKET_WIDTH,SLIDER_SOCKET_HEIGHT,
                       -SLIDER_SOCKET_HEIGHT/2,33.15,0))
+
+# Cap: broad low-profile grip plus thin upper/lower wings captured in L rails.
+# Bore opens inward. 0.05 mm interference on each total bore dimension is a
+# starting press fit, not a promise about any particular printer/material.
+cap=box(0.8,8.0,6.0,-3.8,CAP_BACK_X+0.4,0)
+cap=cap.union(box(1.6,8.0,3.7,-2.5,CAP_WING_FRONT_X+0.8,0))
+cap=cap.cut(box(2.2,2.95,1.15,-0.575,CAP_BACK_X+0.9,0))
+
+def cap_print_orientation(part):
+    # Outer grip face on bed, bore open upward: no support trapped in the bore.
+    p=part.rotate((0,0,0),(0,1,0),90)
+    b=p.val().BoundingBox()
+    return p.translate((-b.xmin,-b.ymin,-b.zmin))
 
 def print_orientation(part):
     # Lie each extension on its tangential side, preserving the socket opening.
@@ -117,9 +152,10 @@ def print_orientation(part):
 parts={'body':body.translate((0,0,-2.4)), 'rear_cover':back,
        'front_bezel':front, 'mount_fit_check':coupon,
        'power_slider':print_orientation(slider),
+       'power_slider_cap':cap_print_orientation(cap),
        'button_extension':print_orientation(button)}
 # A small unchanged-in-scale section of the new control wall for cheap trials.
-control_check=body.intersect(box(14,28,6.6,19.6,38,0))
+control_check=body.intersect(box(11.4,28,17.0,9.5,39.3,0))
 b=control_check.val().BoundingBox()
 parts['control_fit_check']=control_check.translate((0,0,-b.zmin))
 # Check actual battery envelope plus 0.5 mm padding on every side.
@@ -137,11 +173,25 @@ for y in BUTTON_Y:
         assert body.intersect(placed).val().Volume()<1e-5,('button blocked',y,travel)
 for dy in (-SLIDER_TRAVEL/2,0,SLIDER_TRAVEL/2):
     assert body.intersect(slider.translate((0,SLIDER_Y+dy,SLIDER_Z))).val().Volume()<1e-5,('slider blocked',dy)
+    assert body.intersect(cap.translate((0,SLIDER_Y+dy,SLIDER_Z))).val().Volume()<1e-5,('cap blocked',dy)
+# Slot, inner carriage pocket and outer rails all share the same travel axis.
+# Verify small axial play without binding either bearing (not the switch itself).
+for dx in (-0.15,0.15):
+    assert body.intersect(slider.translate((dx,SLIDER_Y,SLIDER_Z))).val().Volume()<1e-5,('carriage axial bind',dx)
+    assert body.intersect(cap.translate((dx,SLIDER_Y,SLIDER_Z))).val().Volume()<1e-5,('cap axial bind',dx)
+# Demonstrate the bearings actually capture the assembly, rather than merely
+# leaving clearance: an outward pull or off-axis motion must contact a guide.
+for dx,dz in [(0.7,0),(0,0.6),(0,-0.6)]:
+    assert body.intersect(cap.translate((dx,SLIDER_Y,SLIDER_Z+dz))).val().Volume()>0.01,'cap not captured'
+# Prove the cap can load from the -Y mouth of its rails before stem insertion.
+for dy in (-10,-7,-5,-3,-SLIDER_TRAVEL/2):
+    assert body.intersect(cap.translate((0,SLIDER_Y+dy,SLIDER_Z))).val().Volume()<1e-5,('cap loading blocked',dy)
 assert 0.5 < SLIDER_MEASURED_TIP_X-32.4 < 1.7,'insufficient measured slider engagement'
 # Flat wall test away from apertures; exactly 3 mm wall, ending on the chord.
 flat_sample=box(3.0,1.0,0.4,24.4,(FLAT_INNER_X+FLAT_X)/2,15)
 assert flat_sample.cut(body).val().Volume()<1e-5,'flat wall missing'
-assert body.intersect(box(10,44,FLAT_TOP-FLAT_Z,FLAT_Z,FLAT_X+5,0)).val().Volume()<1e-5,'control band not flat'
+# Exterior rails deliberately protrude; sample the flat face outside their Y span.
+assert body.intersect(box(10,1,FLAT_TOP-FLAT_Z,FLAT_Z,FLAT_X+5,15)).val().Volume()<1e-5,'control band not flat'
 # Prove circular top/bottom rings remain complete, away from screw holes.
 for z in (2.5,28.8):
     ring=cyl(44,0.15,z).cut(cyl(43.8,0.3,z-0.05))
@@ -167,8 +217,14 @@ assembly.add(body,name='body',color=cq.Color(0.20,0.24,0.28))
 assembly.add(back.translate((0,0,-1.6)),name='rear_cover',color=cq.Color(0.35,0.40,0.45))
 assembly.add(front.translate((0,0,29.4)),name='front_bezel',color=cq.Color(0.7,0.72,0.75))
 assembly.add(slider.translate((0,SLIDER_Y+SLIDER_TRAVEL/2,SLIDER_Z)),name='power_slider',color=cq.Color(0.8,0.5,0.2))
+assembly.add(cap.translate((0,SLIDER_Y+SLIDER_TRAVEL/2,SLIDER_Z)),name='power_slider_cap',color=cq.Color(0.95,0.65,0.25))
 for i,y in enumerate(BUTTON_Y):
     assembly.add(button.translate((0,y,BUTTON_Z)),name=f'button_{i}',color=cq.Color(0.8,0.5,0.2))
 assembly.save(str(OUT/'assembly.step'))
+mechanism=cq.Assembly(name='control_test_assembly')
+mechanism.add(control_check,name='test_wall',color=cq.Color(0.20,0.24,0.28))
+mechanism.add(slider.translate((0,SLIDER_Y,SLIDER_Z)),name='carriage',color=cq.Color(0.8,0.5,0.2))
+mechanism.add(cap.translate((0,SLIDER_Y,SLIDER_Z)),name='cap',color=cq.Color(0.95,0.65,0.25))
+mechanism.save(str(OUT/'control_test_assembly.step'))
 (OUT/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

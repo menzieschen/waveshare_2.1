@@ -1,9 +1,9 @@
 {
   "body": {
-    "triangles": 11462,
+    "triangles": 11464,
     "open_or_nonmanifold_edges": 0,
     "winding_errors": 0,
-    "signed_volume_mm3": 26733.56
+    "signed_volume_mm3": 26622.27
   },
   "front_bezel": {
     "triangles": 4052,
@@ -24,21 +24,27 @@
     "signed_volume_mm3": 2251.26
   },
   "power_slider": {
-    "triangles": 76,
+    "triangles": 92,
     "open_or_nonmanifold_edges": 0,
     "winding_errors": 0,
-    "signed_volume_mm3": 61.24
+    "signed_volume_mm3": 59.31
+  },
+  "power_slider_cap": {
+    "triangles": 44,
+    "open_or_nonmanifold_edges": 0,
+    "winding_errors": 0,
+    "signed_volume_mm3": 78.98
   },
   "button_extension": {
     "triangles": 44,
     "open_or_nonmanifold_edges": 0,
     "winding_errors": 0,
-    "signed_volume_mm3": 54.0
+    "signed_volume_mm3": 31.13
   },
   "control_fit_check": {
-    "triangles": 292,
+    "triangles": 296,
     "open_or_nonmanifold_edges": 0,
     "winding_errors": 0,
-    "signed_volume_mm3": 669.57
+    "signed_volume_mm3": 1651.58
   }
 }

@@ -1,145 +1,152 @@
-# Arc reactor housing — revision 3
+# Arc reactor housing — revision 4
 
-For Waveshare **ESP32-S3-Touch-LCD-2.1B**, curved 71.8 mm glass, and a wrapped
-**66 × 36 × 11 mm** LiPo. All dimensions are millimeters. Print at **100% scale**.
-Nominal assembled envelope remains **88 mm diameter × 34 mm deep**, excluding
-control blades and screw heads. The rear cover remains 4 mm thick, without LED holes.
+Waveshare **ESP32-S3-Touch-LCD-2.1B**, 71.8 mm curved glass, with a wrapped
+**66 × 36 × 11 mm** LiPo. Dimensions in millimeters; print at **100% scale**.
+Nominal case envelope remains **88 mm diameter × 34 mm deep**, excluding controls.
 
-## Revision 3 changes
+## Revision 4 changes
 
-- Cover fasteners are now at **12, 1:30, 4, 6, and 9 o'clock**, at the same
-  40.7 mm radius. Body, front bezel, and rear cover all use this five-hole pattern.
-  Clock positions are viewed from the screen/front, with the controls at 3 o'clock;
-  the pattern appears mirrored when looking at the outside of the rear cover.
-- The curved control wall is replaced with a **flat chord from 2 to 4 o'clock**,
-  at the height of the controls only. The flat exterior is X = 38.105 mm,
-  about 5.895 mm inside the outermost round rim, spanning approximately Y = ±22 mm.
-  Its nominal thickness is 3 mm; local internal clearance pockets accept the
-  extensions. The flat band runs from assembled Z = 20 to 25 mm.
-- One-mm horizontal shoulders above and below that band join it to the round
-  shell. The full circular front and rear rims are retained, rather than clipping
-  the entire height of the housing. The bezel and rear cover stay fully round.
-- Both control-extension models have revised collar locations for the flat wall.
-  Their exterior tips remain beyond the round rims so they can be pressed.
-- Power-slider travel is updated to the user's measured **2.03 mm**. Tab dimensions
-  are **1.52 × 0.63 mm**, with its tip recessed **1.74 mm** from the glass edge.
-  The socket reach now accounts for that recess; its clearance size remains
-  2.0 mm wide × 1.3 mm high, with about 2 mm depth.
+- The flat control well is now **15 mm tall in Z**, from assembled Z = 10.5 to
+  25.5, instead of the previous 5 mm. The flat face remains at X = 38.105, the
+  chord between 2 and 4 o'clock. Full round front/rear rims remain, joined by
+  1 mm horizontal shoulders. The upper shoulder ends at Z = 26.5, below the
+  standard vendor glass envelope starting at Z = 26.7.
+- The two push-button extensions are shortened from **10.6 to about 5.3 mm**,
+  ending 1.4 mm outside the flat wall. Print the same new file twice.
+- The power-slider extension now has a **6 × 3.8 mm internal bearing plate**
+  running in a close-clearance recess. Its socket position/size remains the
+  physically tested revision 3 geometry: 2.0 × 1.3 mm opening, about 2 mm depth.
+- A new **press-fit outer cap** has an 8 mm wide grip and thin wings captured
+  beneath two external L rails. These rails and the internal bearing plate
+  resist rocking, so the switch tab no longer supplies the entire guiding force.
+- A shoulder sets cap insertion depth. Nominal cap-to-wall and wing-to-lip gaps
+  are 0.3 mm. Vertical wing clearance is 0.25 mm per side. The inner plate has
+  0.3 mm clearance per side; its recess permits 2.63 mm total movement around
+  the measured 2.03 mm switch travel. These small clearances permit some play;
+  the design is not intended to be a zero-clearance clamp.
 
-The confirmed board mounting-hole centers, flat M2 pad tops, battery guide faces,
-USB opening locations, and rear battery clearance are retained. The 4 o'clock
-fastener boss clears both the USB slot and the control area in CAD. **There is no
-fastener at 3 o'clock.** No bosses are placed over the USB ports.
+The five cover fasteners remain at **12, 1:30, 4, 6, and 9 o'clock**, viewed from
+the screen/front with the controls on the right. USB openings, board mounting
+centers, flat M2 seating pads, battery guide faces, and rear cover thickness are
+retained. **Revision 3 front bezel and rear cover can be reused.**
 
-## What to print
+## Files to print
 
-Reprint **body, front bezel, rear cover, power slider, and two button extensions**.
-The old bezel and rear cover have the wrong hole pattern for this revision.
-Use the small **control_fit_check.stl** first to check the flat wall and extensions
-before committing to a full new body. This coupon is a hand-aligned section of
-the actual wall, not an installed part or a self-locating mount gauge.
+- `body.stl`: new body with the wider well, inner carriage recess and outer rails.
+- `button_extension.stl`: **print two**, for RESET and BOOT.
+- `power_slider.stl`: **print one** new carriage/extension.
+- `power_slider_cap.stl`: **print one** press-fit outer cap.
+- `control_fit_check.stl`: **print this first** to test the carriage, cap and
+  shorter buttons before committing to another complete body. It is a cutout
+  of the actual new control wall, not a self-locating board-mount gauge.
 
-Files:
+Also supplied: unchanged `front_bezel.stl`, `rear_cover.stl` and mounting gauge;
+matching STEP files; complete `assembly.step`; a smaller `control_test_assembly.step`
+showing the coupon/carriage/cap assembled; `preview.png`; solid/mesh validation
+reports; and both STL-only and full-source ZIP bundles.
 
-- `body.stl`: revised shell, positioned on the print bed.
-- `front_bezel.stl`: round bezel with five cover screw holes.
-- `rear_cover.stl`: round 4 mm cover with five screw holes; no LED windows.
-- `power_slider.stl`: print one, using the new measured tab reach.
-- `button_extension.stl`: print **two identical copies**, for RESET and BOOT.
-- `control_fit_check.stl`: small flat-control-wall trial piece.
-- `mount_fit_check.stl`: original mounting-spacing gauge, unchanged.
-- Matching `*.step` files and `assembly.step`: editable solid CAD.
-- `preview.png`: technical views of actual exported STL meshes.
-- `validation.json`, `mesh_validation.json`: solid and mesh check results.
-- `arc_reactor_housing.zip`: bundle including the source and instructions.
+**Use all three new slider parts together**: new body (or coupon), new carriage,
+and new cap. Revision 3 collars/stems do not suit the new captured guide.
+
+## Important assembly order for the captured cap
+
+The cap's wings cannot be pushed straight through the overhanging L rails.
+They must enter from an open end, before attaching the stem:
+
+1. Remove supports and deburr the coupon/body guide surfaces. Keep all mating
+   surfaces free of elephant foot and loose strands.
+2. With **the board out**, slide the cap **along Y** into the outside L rails,
+   entering from the end nearest USB (negative Y). The thin wing plate faces
+   the wall, the thicker grip faces out, and the bore opens toward the wall.
+3. Insert the internal carriage from inside the housing. Align its short stem
+   with the cap bore and press them together until the cap meets the stem's
+   shoulder. Support the carriage and cap directly while doing this. **Do not
+   use the board switch as the backstop for press-fitting.**
+4. Check the assembled carriage/cap moves sideways freely. It should not clamp
+   the wall or rub the rail lips. The internal pocket gives a small margin beyond
+   the board's measured 2.03 mm travel; it does not establish the switch's safe
+   force or overtravel rating. Do not force the mechanism against an end stop.
+5. Feed the two new push-button stems outward from inside, collars remaining in.
+6. Lower the board in from the front and carefully engage the black switch tab
+   in the carriage's inward-open socket. Attach the board, then verify both
+   power positions and that RESET/BOOT release fully after light presses.
+7. Close the bezel and rear cover only after the controls and USB plugs work freely.
+
+The cap bore is **2.95 × 1.15 mm** for a **3.0 × 1.2 mm** stem: a starting press
+fit with 0.05 mm interference on each *total dimension*. Actual fit depends on
+printer, material and orientation. Do not force a cap that is too tight or glue a
+binding assembly; adjust the bore dimensions in `build.py` or carefully dress
+only the plastic surfaces. Do the trial on the coupon first. The socket coupling
+to the board switch is not intended as a press fit.
+
+The push buttons still rely on the board's own tactile switches for return force;
+there is no independent spring or calibrated overtravel stop. Use light pressure.
 
 ## Printing
 
-Suggested body settings: PLA or PETG, 0.2 mm layers, 0.4 mm nozzle, four perimeters,
-20–30% infill. Print open side upward with **supports under mounting bridges and
-under the projecting horizontal shoulders at the flat control band**. Remove all
-supports before inserting electronics. Rear cover: flat. Front bezel: flat front
-face downward, underside glass relief upward.
+Suggested body: PLA or PETG, 0.2 mm layers, 0.4 mm nozzle, four perimeters,
+20–30% infill. Print with the front opening upward. **Support the mounting
+bridges, the horizontal well shoulders, and the external L-rail overhangs.**
+Clean supports out of the inner carriage recess and from beneath the rail lips.
 
-For the tiny extensions, PETG and 0.12–0.16 mm layers are suggested. The supplied
-orientation lies each on its tangential side. Use supports under raised stems,
-collars, and socket overhangs; not every underside touches the bed. Deburr and
-compensate elephant foot so the 1.2 mm stems move freely in the 1.8 mm slits.
-Do not force a fit with the board installed.
+For the tiny control parts, PETG and 0.12–0.16 mm layers are suggested. Slider
+and push-button STLs lie on their tangential sides; their stems/plates have raised
+undersides and need small supports. The cap is oriented grip-face down with its
+bore opening upward; support the wing overhangs if needed, but keep the bore
+free of support material. Inspect the slicer preview to verify the bore remains
+open. Rear cover: flat. Bezel: flat front face downward, relief upward.
 
-## Controls and assembly
+## Screws and battery
 
-The extensions have thin exterior blades and wider internal retaining collars.
-Insert them from the inside before fitting the board. Their collars stay inside;
-the board prevents them falling inward after assembly. They have no independent
-return spring or calibrated overtravel stop: use light pressure, and verify that
-neither RESET nor BOOT is held down at rest.
+- Display: four **M2 × 4 mm pan-head machine screws** through 2.4 mm mounting
+  pads into the existing threaded spacers. Nominal engagement 1.6 mm; verify
+  actual depth and tighten gently.
+- Bezel: five **M2.5 × 6 mm screws for plastic** through the 3 mm bezel.
+- Rear cover: five **M2.5 × 8 mm screws for plastic** through the 4 mm cover.
 
-1. Trial-fit the control coupon and extensions against the board. Check slot
-   height, slider engagement, and free travel before printing the full body.
-2. Feed the stems outward through their slits, leaving collars inside. The
-   slider socket opens inward toward the black tab. Lower the board in from the
-   front and carefully engage that tab with the socket. Remove and adjust any
-   extension that binds; do not force or glue the controls.
-3. Attach the display using four **M2 × 4 mm pan-head machine screws**, inserted
-   from the rear through the 2.4 mm support pads into the board's threaded spacers.
-   Nominal engagement is about 1.6 mm; check actual thread depth and tighten gently.
-4. Check both USB plugs insert fully and all three controls operate freely.
-5. Fit the bezel with **five M2.5 × 6 mm screws suitable for plastic** through
-   the 3 mm bezel. The body has 2.1 mm pilots, about 4.4 mm deep at the front.
-   No washers or shorter bezel screws are required for this revised pattern.
-6. Place the battery with its 66 mm axis along Y between the guide faces. Use
-   removable nonconductive tape if needed; keep the pouch uncompressed and route
-   wiring around an open guide end, clear of screws and actuator parts.
-7. Fit the rear cover using **five M2.5 × 8 mm screws for plastic** through its
-   4 mm thickness. Do not substitute longer screws without checking clearance.
+Keep the battery's 66 mm axis along Y between the guide faces. Retain it with
+removable nonconductive tape if needed, without compressing the pouch. Route
+wires around an open guide end, clear of fasteners and moving control parts.
+There are no rear LED windows. Costume attachment is not included.
 
-The 3 o'clock screw from older versions is omitted. Do not drill extra holes
-there or reuse old cover patterns. The rear cover's inner face is unchanged;
-its 1.6 mm extra thickness relative to revision 1 grows outward.
+## Evidence and limitations
 
-## Measurements, assumptions and sources
+The user has physically confirmed the revision 3 case, button alignment, slider
+socket fit and reach. That long unsupported slider could rotate around the switch;
+the revision 4 bearings and captured cap specifically address that failure.
+**Revision 4 has not yet been physically printed or tested.** Finger access and
+press-fit tolerances must be checked on the included small coupon.
 
-Board mounting positions and battery fit were physically confirmed on earlier
-prints. The previous button extensions nearly fitted. **Revision 3's flat band,
-new fastener pattern, collars, and slider reach have not been physically fitted.**
-The supplied checks establish geometric clearance, not actual switch travel limits
-or printer tolerances.
+User measurements: tab **1.52 × 0.63 mm**, travel **2.03 mm**, tab tip **1.74 mm**
+inside the glass edge. Recess is interpreted along X from the local 71.8 mm glass
+edge; interpreting it radially changes the estimate by only about 0.04 mm.
+Coordinates follow the vendor model with screen facing +Z, shifted +25.5 mm in Z.
+M2 centers remain (±29.5, 13.638), (±18, −27.060), pad tops Z = 19.4.
+RESET/BOOT: Y = 0.5023 / 8.1023, Z = 22.45. Slider: Y = −7.303,
+Z = 22.3995, movement along Y. The upper well edge is limited by display clearance;
+the added finger space is primarily below the original control height.
 
-Coordinate system: vendor STEP with screen facing +Z; translated +25.5 mm in Z.
-Mount centers: (±29.5, 13.638), (±18, −27.060); pad tops Z = 19.4.
-RESET/BOOT actuator centers: Y = 0.5023 / 8.1023, Z = 22.45, facing +X.
-Slider center: Y = −7.303, Z = 22.3995; movement along Y. The measured recess is
-interpreted along X from the local 71.8 mm glass edge; a radial interpretation
-would change the estimated tip coordinate by only about 0.04 mm. That gives
-roughly 1 mm insertion into the new socket. Physical socket fit still needs checking.
-
-Vendor product and mechanical references:
+Vendor references:
 
 - https://www.waveshare.com/esp32-s3-touch-lcd-2.1.htm
 - https://files.waveshare.com/wiki/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1_structure.zip
 - https://www.waveshare.com/img/devkit/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1-details-size-1.jpg
-- https://www.waveshare.com/img/devkit/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1-details-size-3.jpg
 
-The vendor STEP represents standard 75 mm glass, not a dedicated B assembly.
-The B glass diameter and the user's measurements override the relevant assumptions.
-There are no rear-facing status LEDs; the actual status LEDs sit next to USB.
-Costume attachment is not included.
+## Rebuilding and checks
 
-## Rebuild and validation
-
-The current workspace has Python, CadQuery 2.7.0, NumPy and Matplotlib. Use the
-existing checkout; no Git worktree is needed. Run from the repository root:
+Current environment: Python, CadQuery 2.7.0, NumPy, Matplotlib. Use the existing
+checkout; no Git worktree is needed. Run from the repository root:
 
 ```sh
 XDG_CACHE_HOME=/tmp/cad-cache python housing/build.py
 MPLCONFIGDIR=/tmp/matplotlib XDG_CACHE_HOME=/tmp/cad-cache python housing/inspect_meshes.py
 ```
 
-The build checks valid single solids; a padded 37 × 67 × 12 mm battery envelope;
-complete flat annular mounting-pad tops; control clearance over 0.6 mm button
-movement and 2.03 mm slider travel; the flat wall and circular upper/lower rims;
-and clearance of all five fastener bosses and bezel screw thread envelopes from
-both USB openings. All seven STL meshes must have closed manifold edges,
-consistent face winding, and positive signed volume. These checks do not replace
-a slicer preview or physical fit test.
+Build checks include valid single solids; padded battery clearance; complete flat
+mounting-pad tops; full nominal slider and button movement; cap clearance during
+side-loading into rails; small axial bearing play; positive guide contact when
+attempting to pull the cap out or displace it vertically; retained flat wall and
+circular rims; and USB clearance from all cover bosses and screw envelopes.
+All eight meshes must have closed manifold edges, consistent face winding and
+positive volume. Results: `validation.json` and `mesh_validation.json`. CAD checks
+cannot prove actual friction, return force, press-fit strength or finger comfort.
