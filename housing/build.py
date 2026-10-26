@@ -1,4 +1,4 @@
-"""Revision 5: guided controls and a reinforced two-hole lanyard lug. Units: mm."""
+"""Revision 6: clearance-fit slider cap with a tapered socket entry. Units: mm."""
 from pathlib import Path
 import json
 import math
@@ -27,6 +27,7 @@ CAP_BACK_X = FLAT_X+SLIDE_CLEARANCE
 CAP_WING_FRONT_X = CAP_BACK_X+0.8
 CAP_OUTER_X = CAP_BACK_X+2.4
 RAIL_LIP_X = CAP_WING_FRONT_X+SLIDE_CLEARANCE
+CAP_SOCKET_WIDTH, CAP_SOCKET_HEIGHT = 3.3,1.5
 LANYARD_Z, LANYARD_THICKNESS = 3.4,6.0  # 1 mm above rear-cover mating face
 LANYARD_HOLES = [(-5.0,48.0),(5.0,48.0)]
 # User measurement from the local glass edge to outermost tab tip. Treat the
@@ -140,17 +141,26 @@ slider=slider.cut(box(2.5,SLIDER_SOCKET_WIDTH,SLIDER_SOCKET_HEIGHT,
                       -SLIDER_SOCKET_HEIGHT/2,33.15,0))
 
 # Cap: broad low-profile grip plus thin upper/lower wings captured in L rails.
-# Bore opens inward. 0.05 mm interference on each total bore dimension is a
-# starting press fit, not a promise about any particular printer/material.
+# Bore opens inward. 0.15 mm nominal clearance per side accommodates the user's
+# too-tight print. Rails capture the cap; it need not be forced onto the stem.
 cap=box(0.8,8.0,6.0,-3.8,CAP_BACK_X+0.4,0)
 cap=cap.union(box(1.6,8.0,3.7,-2.5,CAP_WING_FRONT_X+0.8,0))
-cap=cap.cut(box(2.2,2.95,1.15,-0.575,CAP_BACK_X+0.9,0))
+cap=cap.cut(box(2.2,CAP_SOCKET_WIDTH,CAP_SOCKET_HEIGHT,
+                -CAP_SOCKET_HEIGHT/2,CAP_BACK_X+0.9,0))
+cap_entry=(cq.Workplane('YZ').workplane(offset=CAP_BACK_X-0.01)
+           .rect(3.7,1.9).workplane(offset=0.36)
+           .rect(CAP_SOCKET_WIDTH,CAP_SOCKET_HEIGHT).loft())
+cap=cap.cut(cap_entry)
+assert cap.intersect(slider).val().Volume()<1e-5,'cap socket binds stem'
 
 def cap_print_orientation(part):
     # Outer grip face on bed, bore open upward: no support trapped in the bore.
     p=part.rotate((0,0,0),(0,1,0),90)
-    b=p.val().BoundingBox()
-    return p.translate((-b.xmin,-b.ymin,-b.zmin))
+    # The tapered rectangular bore can inflate OCC's approximate B-spline
+    # bounding box; its planar corner vertices give the exact bed placement.
+    vertices=p.val().Vertices()
+    return p.translate((-min(v.X for v in vertices),-min(v.Y for v in vertices),
+                        -min(v.Z for v in vertices)))
 
 def print_orientation(part):
     # Lie each extension on its tangential side, preserving the socket opening.

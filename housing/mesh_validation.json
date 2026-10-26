@@ -30,10 +30,10 @@
     "signed_volume_mm3": 59.31
   },
   "power_slider_cap": {
-    "triangles": 44,
+    "triangles": 52,
     "open_or_nonmanifold_edges": 0,
     "winding_errors": 0,
-    "signed_volume_mm3": 78.98
+    "signed_volume_mm3": 75.52
   },
   "button_extension": {
     "triangles": 44,

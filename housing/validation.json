@@ -55,9 +55,9 @@
     "size_mm": [
       6.0,
       8.0,
-      2.4
+      2.497
     ],
-    "volume_mm3": 78.97
+    "volume_mm3": 75.52
   },
   "button_extension": {
     "valid": true,

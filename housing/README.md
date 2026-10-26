@@ -1,9 +1,29 @@
-# Arc reactor housing — revision 5
+# Arc reactor housing — revision 6
 
 Waveshare **ESP32-S3-Touch-LCD-2.1B**, 71.8 mm curved glass, with a wrapped
 **66 × 36 × 11 mm** LiPo. Dimensions in millimeters; print at **100% scale**.
 The round case remains **88 mm diameter × 34 mm deep**, excluding controls.
 The top lanyard lug increases the overall height to approximately **97 mm**.
+
+## Revision 6: easier-fitting power-slider cap
+
+**Only `power_slider_cap.stl` needs reprinting.** The body, slider carriage,
+button extensions, bezel, rear cover and test coupon remain unchanged.
+
+The cap socket is now **3.3 × 1.5 mm**, increased from **2.95 × 1.15 mm** for
+its **3.0 × 1.2 mm** stem. This gives **0.15 mm nominal clearance per side**
+instead of interference. A **3.7 × 1.9 mm tapered entry** narrows over 0.35 mm
+into the socket to make insertion easier. Socket depth, insertion shoulder,
+exterior grip and guide wings remain unchanged.
+
+This is a clearance fit, not a guaranteed friction/press fit. The external L rails
+capture the cap and the carriage stem couples its sideways movement; a small
+amount of fit play is expected. Printer shrinkage and hole sizing can still vary.
+Try it with the printed carriage and control coupon before fitting the board.
+Keep the original assembly order: slide the cap into the rails from the side,
+then insert the carriage stem from inside with the board removed. Do not force
+the fit or push against the board switch. The new socket passes a CAD check for
+zero solid interference with the complete seated carriage.
 
 ## Revision 5: rear-edge lanyard attachment at 12 o'clock
 
@@ -41,7 +61,7 @@ checks do not establish a catch-load rating for the printed attachment.
 - The power-slider extension now has a **6 × 3.8 mm internal bearing plate**
   running in a close-clearance recess. Its socket position/size remains the
   physically tested revision 3 geometry: 2.0 × 1.3 mm opening, about 2 mm depth.
-- A new **press-fit outer cap** has an 8 mm wide grip and thin wings captured
+- A new **outer cap** has an 8 mm wide grip and thin wings captured
   beneath two external L rails. These rails and the internal bearing plate
   resist rocking, so the switch tab no longer supplies the entire guiding force.
 - A shoulder sets cap insertion depth. Nominal cap-to-wall and wing-to-lip gaps
@@ -60,7 +80,7 @@ retained. **Revision 3 front bezel and rear cover can be reused.**
 - `body.stl`: new body with the wider well, inner carriage recess and outer rails.
 - `button_extension.stl`: **print two**, for RESET and BOOT.
 - `power_slider.stl`: **print one** new carriage/extension.
-- `power_slider_cap.stl`: **print one** press-fit outer cap.
+- `power_slider_cap.stl`: **print one** clearance-fit outer cap.
 - `control_fit_check.stl`: **print this first** to test the carriage, cap and
   shorter buttons before committing to another complete body. It is a cutout
   of the actual new control wall, not a self-locating board-mount gauge.
@@ -97,12 +117,10 @@ They must enter from an open end, before attaching the stem:
    power positions and that RESET/BOOT release fully after light presses.
 7. Close the bezel and rear cover only after the controls and USB plugs work freely.
 
-The cap bore is **2.95 × 1.15 mm** for a **3.0 × 1.2 mm** stem: a starting press
-fit with 0.05 mm interference on each *total dimension*. Actual fit depends on
-printer, material and orientation. Do not force a cap that is too tight or glue a
-binding assembly; adjust the bore dimensions in `build.py` or carefully dress
-only the plastic surfaces. Do the trial on the coupon first. The socket coupling
-to the board switch is not intended as a press fit.
+The cap bore uses the revision 6 clearance fit described above. If the printed
+socket still binds, check for support residue or elephant foot before adjusting
+its dimensions in `build.py`. Do not force the mechanism with the board installed.
+The socket coupling to the board switch remains unchanged.
 
 The push buttons still rely on the board's own tactile switches for return force;
 there is no independent spring or calibrated overtravel stop. Use light pressure.
@@ -140,7 +158,7 @@ The user has physically confirmed the revision 3 case, button alignment, slider
 socket fit and reach. That long unsupported slider could rotate around the switch;
 the revision 4 bearings and captured cap specifically address that failure.
 **Revision 4 has not yet been physically printed or tested.** Finger access and
-press-fit tolerances must be checked on the included small coupon.
+socket tolerances must be checked on the included small coupon.
 
 User measurements: tab **1.52 × 0.63 mm**, travel **2.03 mm**, tab tip **1.74 mm**
 inside the glass edge. Recess is interpreted along X from the local 71.8 mm glass
