@@ -47,7 +47,7 @@ for i,name in enumerate(names):
     ax.view_init(58,-65)
     ax.set_title(name.replace('_',' ').title(),fontsize=15)
     ax.set_axis_off()
-fig.suptitle('Arc reactor housing — revision 4\n15 mm finger well · shorter stems · captured power-slider carriage and cap',fontsize=19)
+fig.suptitle('Arc reactor housing — revision 5\nReinforced two-hole lanyard lug · guided controls · 15 mm finger well',fontsize=19)
 fig.tight_layout(rect=[0,0,1,0.93])
 fig.savefig(root/'preview.png',dpi=160)
 (root/'mesh_validation.json').write_text(json.dumps(checks,indent=2)+'\n')

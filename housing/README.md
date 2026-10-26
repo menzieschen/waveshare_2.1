@@ -1,8 +1,33 @@
-# Arc reactor housing — revision 4
+# Arc reactor housing — revision 5
 
 Waveshare **ESP32-S3-Touch-LCD-2.1B**, 71.8 mm curved glass, with a wrapped
 **66 × 36 × 11 mm** LiPo. Dimensions in millimeters; print at **100% scale**.
-Nominal case envelope remains **88 mm diameter × 34 mm deep**, excluding controls.
+The round case remains **88 mm diameter × 34 mm deep**, excluding controls.
+The top lanyard lug increases the overall height to approximately **97 mm**.
+
+## Revision 5: rear-edge lanyard attachment at 12 o'clock
+
+Only **body.stl** needs reprinting for this change. Revision 4 control parts,
+bezel, rear cover, and test coupon are unchanged and compatible.
+
+A reinforced external lug is centered at **12 o'clock**, toward the **rear-cover
+edge (bottom in Z)**. It has two **4 mm through-holes**, **10 mm center-to-center**,
+with 0.5 mm rounded entrances to reduce cord abrasion. Its rounded root is
+22 mm wide and the lug is 6 mm thick. The lug begins **1 mm above the rear-cover
+mating plane**, leaving the cover free to install. It extends 9 mm beyond the
+round top edge, so the bores and tether remain outside the electronics cavity.
+The 12 o'clock cover screw pilot is retained and clear.
+
+Thread a thin lanyard cord through the two holes to form a tether attachment;
+deburr the printed entrances. Support the underside of the lug when printing
+(the underside is 1 mm above the print bed in the supplied body orientation).
+PETG and at least four perimeters are suggested. This attachment has not been
+load-tested; check the printed root and test with a gentle pull before use.
+For a child's costume, use a **breakaway lanyard**.
+
+The build checks both bores are open and outside the cavity, battery clearance,
+and the usual control/fastener clearances. Mesh closure is also checked. These
+checks do not establish a catch-load rating for the printed attachment.
 
 ## Revision 4 changes
 

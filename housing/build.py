@@ -1,4 +1,4 @@
-"""Revision 4: taller finger well and a captured, guided power slider. Units: mm."""
+"""Revision 5: guided controls and a reinforced two-hole lanyard lug. Units: mm."""
 from pathlib import Path
 import json
 import math
@@ -27,6 +27,8 @@ CAP_BACK_X = FLAT_X+SLIDE_CLEARANCE
 CAP_WING_FRONT_X = CAP_BACK_X+0.8
 CAP_OUTER_X = CAP_BACK_X+2.4
 RAIL_LIP_X = CAP_WING_FRONT_X+SLIDE_CLEARANCE
+LANYARD_Z, LANYARD_THICKNESS = 3.4,6.0  # 1 mm above rear-cover mating face
+LANYARD_HOLES = [(-5.0,48.0),(5.0,48.0)]
 # User measurement from the local glass edge to outermost tab tip. Treat the
 # recess as parallel to +X (radial interpretation differs by only ~0.04 mm).
 SLIDER_MEASURED_TIP_X = math.sqrt((71.8/2)**2-SLIDER_Y**2)-1.74
@@ -42,6 +44,13 @@ def radial_slot(angle, width, z, height, start=28):
     return box(25,width,height,z,start+12.5,0).rotate((0,0,0),(0,0,1),angle)
 
 body = cyl(OUTER_R,27,2.4).cut(cyl(INNER_R,29,1.4))
+# External top lug: rounds on both faces reduce cord abrasion. The broad root
+# overlaps the complete shell thickness; bores stay outside the electronics.
+lanyard_lug=box(22,14,LANYARD_THICKNESS,LANYARD_Z,0,46).edges('|Z').fillet(3.0)
+for x,y in LANYARD_HOLES:
+    lanyard_lug=lanyard_lug.cut(cyl(2.0,LANYARD_THICKNESS+2,LANYARD_Z-1,x,y))
+lanyard_lug=lanyard_lug.edges('not |Z').fillet(0.5)
+body=body.union(lanyard_lug)
 for x,y in CASE_SCREWS:
     body=body.union(cyl(3.0,27,2.4,x,y))
 # Fill only the control band, then clip to the requested chord. Filling is
@@ -161,6 +170,9 @@ parts['control_fit_check']=control_check.translate((0,0,-b.zmin))
 # Check actual battery envelope plus 0.5 mm padding on every side.
 battery_clearance=box(37,67,12,2.4,0,0)
 assert body.intersect(battery_clearance).val().Volume()<1e-5,'battery interference'
+for x,y in LANYARD_HOLES:
+    assert body.intersect(cyl(1.99,8,LANYARD_Z-1,x,y)).val().Volume()<1e-5,'lanyard bore blocked'
+    assert y-2.0>OUTER_R,'lanyard bore enters electronics cavity'
 # Full annular top of EVERY mounting pad must exist, not merely its hole center.
 for x,y in MOUNTS:
     pad_top=cyl(3.3,0.15,SUPPORT_TOP-0.15,x,y).cut(cyl(1.2,0.3,SUPPORT_TOP-0.2,x,y))

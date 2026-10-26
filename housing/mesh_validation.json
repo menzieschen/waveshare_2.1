@@ -1,9 +1,9 @@
 {
   "body": {
-    "triangles": 11464,
+    "triangles": 58982,
     "open_or_nonmanifold_edges": 0,
     "winding_errors": 0,
-    "signed_volume_mm3": 26622.27
+    "signed_volume_mm3": 27806.64
   },
   "front_bezel": {
     "triangles": 4052,

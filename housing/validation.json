@@ -4,10 +4,10 @@
     "solids": 1,
     "size_mm": [
       88.114,
-      88.114,
+      97.058,
       27.114
     ],
-    "volume_mm3": 26638.55
+    "volume_mm3": 27822.72
   },
   "rear_cover": {
     "valid": true,
